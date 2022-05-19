@@ -50,9 +50,9 @@
         </p>
         <p>
         <ul class="list-unstyled">
-          <li><a href="index.html">Домашняя</a></li>
-          <li><a href="news.html">Новости</a></li>
-          <li><a href="login.html">Войти</a></li>
+          <li><a href="{% url 'mainapp:main_page' %}">Домашняя</a></li>
+          <li><a href="{% url 'mainapp:news' %}">Новости</a></li>
+          <li><a href="{% url 'mainapp:login' %}">Войти</a></li>
         </ul>
         </p>
       </div>
@@ -65,7 +65,7 @@
           <li><a href="#">Положения &amp; Условия</a></li>
           <li><a href="#">Конфиденциальность &amp; Cookies</a></li>
           <li><a href="#">Документация по API</a></li>
-          <li><a href="doc_site.html">Документация по сайту</a></li>
+          <li><a href="{% url 'mainapp:doc_site' %}">Документация по сайту</a></li>
         </ul>
         </p>
       </div>
