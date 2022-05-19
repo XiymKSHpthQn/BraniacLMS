@@ -4,6 +4,14 @@
 
 {% with range as double_range %}
 
+{% if page_num %}
+<div class="card my-2">
+  <div class="card-body">
+    <p class="card-text">Текущая страница: {{ page_num }}</p>
+  </div>
+</div>
+{% endif %}
+
 <div class="row">
 
   <div class="col-lg-8">
@@ -56,11 +64,9 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-
-      {% for i in double_range %}
-      <li class="page-item"><a class="page-link" href="#">{{ i }}</a></li>
-      {% endfor %}
-
+      <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' 1 %}">1</a></li>
+      <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' page=2 %}">2</a></li>
+      {# <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' three %}">3</a></li> #}
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
