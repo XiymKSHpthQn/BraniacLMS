@@ -10,10 +10,10 @@
   
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
+          <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.NewsPageView' %}active{% endif %}">
             <a class="nav-link" href="news.html">Новости</a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.CoursesPageView' %}active{% endif %}">
             <a class="nav-link" href="courses_list.html">Курсы</a>
           </li>
           <li class="nav-item dropdown">
@@ -33,7 +33,7 @@
               <a class="dropdown-item" href="#">Выход</a>
             </div>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.ContactsPageView' %}active{% endif %}">
             <a class="nav-link" href="contacts.html">Контакты</a>
           </li>
         </ul>
