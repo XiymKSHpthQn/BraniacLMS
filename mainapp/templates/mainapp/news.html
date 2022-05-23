@@ -1,126 +1,34 @@
-<!doctype html>
-<html lang="ru">
+{% extends 'base.html' %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block content %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+{% with range as double_range %}
 
-    <!-- ChartJS -->
-    <link rel="stylesheet" href="/static/css/Chart.min.css">
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="/static/css/fontawesome.all.min.css">
-
-    <title>Новости проекта</title>
-</head>
-
-<body>
-
-
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="/static/img/logo.png" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="news.html">Новости</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="courses_list.html">Курсы</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="ddProfile" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Профиль
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="ddProfile">
-                            <a class="dropdown-item" href="#">Редактировать профиль</a>
-                            <a class="dropdown-item" href="#">Мои курсы</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Модерация</a>
-                            <a class="dropdown-item" href="#">Административный раздел</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Выход</a>
-                        </div>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="contacts.html">Контакты</a>
-                    </li>
-                </ul>
-                <span><a href="#">🇷🇺</a> <i class="fas fa-grip-lines-vertical"></i> <a href="#">🇬🇧</a></span>
-            </div>
-        </div>
-    </nav>
-
-
-
-
-
-    <div class="container-md">
-
-        
+{% if page_num %}
+<div class="card my-2">
+  <div class="card-body">
+    <p class="card-text">Текущая страница: {{ page_num }}</p>
+  </div>
+</div>
+{% endif %}
 
 <div class="row">
 
   <div class="col-lg-8">
-    
+
+    {% for i in double_range %}
     <div class="card my-2">
       <div class="card-body">
-          <h5 class="card-title">{{ news_title }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">2021-04-29 20-50-26</h6>
-          <p class="card-text">{{ news_preview }}</p>
-          <a href="#" class="card-link">Подробнее</a>
-      </div>
-    </div>
-    
-    <div class="card my-2">
-      <div class="card-body">
-        <h5 class="card-title">Новость</h5>
-        <h6 class="card-subtitle mb-2 text-muted">2021-04-28 20-50-26</h6>
-        <p class="card-text">Предварительное описание новости</p>
+        <h5 class="card-title">{{ news_title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ datetime_obj|date:"Y-m-d h-i-s" }}
+        </h6>
+        <p class="card-text">{{ news_preview }}</p>
         <a href="#" class="card-link">Подробнее</a>
       </div>
     </div>
-    
-    <div class="card my-2">
-      <div class="card-body">
-        <h5 class="card-title">Новость</h5>
-        <h6 class="card-subtitle mb-2 text-muted">2021-04-27 20-50-26</h6>
-        <p class="card-text">Предварительное описание новости</p>
-        <a href="#" class="card-link">Подробнее</a>
-      </div>
-    </div>
-    
-    <div class="card my-2">
-      <div class="card-body">
-        <h5 class="card-title">Новость</h5>
-        <h6 class="card-subtitle mb-2 text-muted">2021-04-26 20-50-26</h6>
-        <p class="card-text">Предварительное описание новости</p>
-        <a href="#" class="card-link">Подробнее</a>
-      </div>
-    </div>
-    
-    <div class="card mt-2">
-      <div class="card-body">
-        <h5 class="card-title">Новость</h5>
-        <h6 class="card-subtitle mb-2 text-muted">2021-04-25 20-50-26</h6>
-        <p class="card-text">Предварительное описание новости</p>
-        <a href="#" class="card-link">Подробнее</a>
-      </div>
-    </div>
-    
+    {% endfor %}
+
   </div>
 
   <div class="col-lg-4">
@@ -143,7 +51,8 @@
             <input type="date" class="form-control" name="dateTo">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>
+          <button type="submit"
+            class="btn btn-primary btn-block">Фильтровать</button>
         </form>
       </div>
     </div>
@@ -155,102 +64,14 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' 1 %}?param1=foobar">1</a></li>
+      <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' page=2 %}">2</a></li>
+      {# <li class="page-item"><a class="page-link" href="{% url 'mainapp:news_paginator' three %}">3</a></li> #}
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
 </div>
 
+{% endwith %}
 
-
-    </div>
-
-
-
-
-
-    <!-- Footer -->
-
-    <div class="container-lg mt-auto">
-        <hr>
-        <div class="row justify-content-center">
-            <div class="col-sm-6 col-md-3 text-center">
-                <p>
-                    <strong>Braniac</strong>
-                </p>
-                <p>
-                <ul class="list-unstyled">
-                    <li><a href="index.html">Домашняя</a></li>
-                    <li><a href="news.html">Новости</a></li>
-                    <li><a href="login.html">Войти</a></li>
-                </ul>
-                </p>
-            </div>
-            <div class="col-sm-6 col-md-3 text-center">
-                <p>
-                    <strong>Полезное</strong>
-                </p>
-                <p>
-                <ul class="list-unstyled">
-                    <li><a href="#">Положения &amp; Условия</a></li>
-                    <li><a href="#">Конфиденциальность &amp; Cookies</a></li>
-                    <li><a href="#">Документация по API</a></li>
-                    <li><a href="doc_site.html">Документация по сайту</a></li>
-                </ul>
-                </p>
-            </div>
-            <div class="col-sm-6 col-md-3 text-center">
-                <p>
-                    <strong>Мы в социальных сетях</strong>
-                </p>
-                <p>
-                <div class="row justify-content-around">
-                    <div><a href="#"><i class="fab fa-vk fa-2x"></i></a></div>
-                    <div><a href="#"><i class="fab fa-facebook-f fa-2x"></i></a></div>
-                    <div><a href="#"><i class="fab fa-instagram fa-2x"></i></a></div>
-                    <div><a href="#"><i class="fab fa-pinterest-p fa-2x"></i></a></div>
-                </div>
-                </p>
-                <p>
-                    <strong>Наше приложение</strong>
-                </p>
-                <p>
-                <div class="row justify-content-around">
-                    <div><a href="#"><i class="fab fa-app-store fa-2x"></i></a></div>
-                    <div><a href="#"><i class="fab fa-google-play fa-2x"></i></a></div>
-                    <div><a href="#"><i class="fab fa-windows fa-2x"></i></a></div>
-                </div>
-                </p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div>
-                <p><small>&copy; GeekBrains 2021</small></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- /Footer -->
-
-
-
-
-    <!-- JavaScript section -->
-    <!-- Bootstrap -->
-    <script src="/static/js/jquery-3.6.0.min.js"></script>
-    <script src="/static/js/popper.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-
-    <!-- ChartJs -->
-    <script src="/static/js/Chart.min.js"></script>
-
-    <!-- FontAwesome -->
-    <script src="/static/js/fontawesome.all.min.js"></script>
-
-
-
-</body>
-
-</html>
+{% endblock content %}
