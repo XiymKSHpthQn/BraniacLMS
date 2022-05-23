@@ -1,86 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+Курсы
+{% endblock title %}
+
 {% block content %}
 
 <div class="row justify-content-center mt-3">
 
 
+  {% for item in objects %}
   <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course001.jpg' %}" class="card-img-top" alt="...">
+    <a href="{% url 'mainapp:courses_detail' pk=item.pk %}">
+      <img src="{% static item.cover %}" class="card-img-top">
       <div class="card-body">
-        <h5 class="card-title text-center">Web Python</h5>
+        <h5 class="card-title text-center">{{ item.name }}</h5>
       </div>
     </a>
   </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course002.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">Web Golang</h5>
-      </div>
-    </a>
-  </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course003.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">Web JavaScript</h5>
-      </div>
-    </a>
-  </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course004.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">Web Java</h5>
-      </div>
-    </a>
-  </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course005.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">Web PHP</h5>
-      </div>
-    </a>
-  </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course006.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">Python AI</h5>
-      </div>
-    </a>
-  </div>
-
-
-
-  <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
-    <a href="#">
-      <img src="{% static 'img/course007.jpg' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title text-center">DevOps</h5>
-      </div>
-    </a>
-  </div>
-
+  {% endfor %}
 
 </div>
 <div class="row justify-content-center align-items-center mt-3 mb-n3">
