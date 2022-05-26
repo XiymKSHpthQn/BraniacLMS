@@ -29,6 +29,10 @@
 
   {% include 'includes/main_menu.html' %}
 
+  {% block messages %}
+  {% include 'includes/messages.html' %}
+  {% endblock messages %}
+
   <div class="container-md">
 
     {% block content %}
@@ -56,7 +60,11 @@
         <ul class="list-unstyled">
           <li><a href="{% url 'mainapp:main_page' %}">Домашняя</a></li>
           <li><a href="{% url 'mainapp:news' %}">Новости</a></li>
-          <li><a href="{% url 'mainapp:login' %}">Войти</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'authapp:logout' %}">Выйти</a></li>
+          {% else %}
+          <li><a href="{% url 'authapp:login' %}">Войти</a></li>
+          {% endif %}
         </ul>
         </p>
       </div>
@@ -126,7 +134,19 @@
   <!-- FontAwesome -->
   <script src="{% static 'js/fontawesome.all.min.js' %}"></script>
 
+  {% block js %}
+  <script>
+    $(document).ready(function () {
 
+      {% if messages %}
+      // Toasts
+      $(".toast").toast({ delay: 5000 });
+      $(".toast").toast("show");
+      {% endif %}
+
+    });
+  </script>
+  {% endblock js %}
 
 </body>
 
