@@ -1,0 +1,41 @@
+<div class="position-absolute w-100" style="z-index: 1;">
+    <div aria-live="polite" aria-atomic="true" class="m-2">
+      <!-- Position it -->
+      <div class="d-flex align-items-end flex-column">
+  
+        {% for message in messages %}
+        <!-- Then put toasts within -->
+        <div class="toast flex-fill w-100
+      {% if message.level == 30 %}
+      border-warning
+      {% endif %}
+        " role="alert" aria-live="assertive" aria-atomic="true"
+          style="right: 0;">
+          <div class="toast-header">
+            <span class="mr-2"><i class="far fa-envelope"></i></span>
+            <strong
+              class="mr-auto {% if message.level == 30 %}text-warning{% endif %}">
+              {{ message.tags|capfirst }} message</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body">
+            {{ message }}
+          </div>
+        </div>
+        {% if message.level > 20 %}
+        <!-- If message will dissapere you will find message in console -->
+        <script>
+          console.log("{{ message }}");
+        </script>
+        {% endif %}
+  
+        {% endfor %}
+  
+      </div>
+  
+    </div>
+  </div>
