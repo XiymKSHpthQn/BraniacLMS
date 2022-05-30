@@ -7,8 +7,23 @@ app_name = MainappConfig.name
 
 urlpatterns = [
     path("", views.MainPageView.as_view(), name="main_page"),
-    path("news/", views.NewsPageView.as_view(), name="news"),
-    path("news/<int:pk>/", views.NewsPageDetailView.as_view(), name="news_detail"),
+    path("news/", views.NewsListView.as_view(), name="news"),
+    path("news/create/", views.NewsCreateView.as_view(), name="news_create"),
+    path(
+        "news/<int:pk>/detail",
+        views.NewsDetailView.as_view(),
+        name="news_detail",
+    ),
+    path(
+        "news/<int:pk>/update",
+        views.NewsUpdateView.as_view(),
+        name="news_update",
+    ),
+    path(
+        "news/<int:pk>/delete",
+        views.NewsDeleteView.as_view(),
+        name="news_delete",
+    ),
     path("courses/", views.CoursesListView.as_view(), name="courses"),
     path(
         "courses/<int:pk>/",

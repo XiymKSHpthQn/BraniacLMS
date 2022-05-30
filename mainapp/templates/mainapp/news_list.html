@@ -15,10 +15,9 @@
 {% endif %}
 
 <div class="row">
-
   <div class="col-lg-8">
 
-    {% for item in news_qs %}
+    {% for item in object_list %}
     <div class="card my-2">
       <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
@@ -26,7 +25,26 @@
           {{ item.created|date:"Y-m-d h-i-s" }}
         </h6>
         <p class="card-text">{{ item.preambule }}</p>
-        <a href="{% url 'mainapp:news_detail' pk=item.pk %}" class="card-link">Подробнее</a>
+        <div class="row">
+          <div class="col">
+            <a href="{% url 'mainapp:news_detail' pk=item.pk %}"
+              class="card-link">Подробнее</a>
+          </div>
+          {% if perms.mainapp.change_news %}
+          <div class="col-1 text-center">
+            <a href="{% url 'mainapp:news_update' pk=item.pk %}">
+              <i class="far fa-edit"></i>
+            </a>
+          </div>
+          {% endif %}
+          {% if perms.mainapp.delete_news %}
+          <div class="col-1 text-center">
+            <a href="{% url 'mainapp:news_delete' pk=item.pk %}">
+              <i class="far fa-trash-alt"></i>
+            </a>
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
     {% endfor %}
@@ -53,10 +71,17 @@
             <input type="date" class="form-control" name="dateTo">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Фильтровать</button>
+          <button type="submit"
+            class="btn btn-primary btn-block">Фильтровать</button>
         </form>
       </div>
     </div>
+
+    {% if perms.mainapp.add_news %}
+    <a class="btn btn-primary btn-block" role="button"
+      href="{% url 'mainapp:news_create' %}">Добавить новость</a>
+    {% endif %}
+
   </div>
 
 </div>
