@@ -37,7 +37,8 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Модерация</a>
             {% if user.is_superuser %}
-            <a class="dropdown-item" href="#">Административный
+            <a class="dropdown-item" href="{% url 'admin:index' %}"
+              target="_blank">Административный
               раздел</a>
             {% endif %}
             <div class="dropdown-divider"></div>
