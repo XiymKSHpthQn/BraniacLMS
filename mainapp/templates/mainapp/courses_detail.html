@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static markdownify %}
+{% load static markdownify crispy_forms_tags %}
 
 {% block title %}
 {{ course_object.name }}
@@ -7,86 +7,143 @@
 
 {% block content %}
 <h1 class="mt-2">
-    {{ course_object.name }}
+  {{ course_object.name }}
 </h1>
 <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-6 col-lg-8 order-2 order-md-1">
-        <div class="row h-100">
-            <div class="col-12">
-                {% if course_object.description_as_markdown %}
-                {{ course_object.description|markdownify }}
-                {% else %}
-                {{ course_object.description }}
-                {% endif %}
-            </div>
-            <div class="col-12 align-self-end">
-                <p>
-                    <small>Преподаватели</small><br>
-                    {% for item in teachers %}
-                    {{ item.name_second }} {{ item.name_first }}{% if forloop.last %}{% else %},{% endif %}
-                    {% endfor %}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4 order-1 order-md-2">
-        <div class="row h-100">
-            <div class="col-12 align-self-start">
-                <img class="w-100" src="{% static course_object.cover %}">
-            </div>
-            <div class="col-12 align-self-end d-none d-md-block">
-                <p class="text-center mt-2">
-                    <small class="text-uppercase">цена</small><br>
-                    <span style="font-size: 30pt;">
-                        {{ course_object.cost}}
-                    </span><br>
-                    <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 d-md-none order-3 order-sm-3">
-        <p class="text-center">
-            <small class="text-uppercase">цена</small><br>
-            <span style="font-size: 30pt;">
-                {{ course_object.cost}}
-            </span><br>
-            <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
+  <div class="col-sm-12 col-md-6 col-lg-8 order-2 order-md-1">
+    <div class="row h-100">
+      <div class="col-12">
+        {% if course_object.description_as_markdown %}
+        {{ course_object.description|markdownify }}
+        {% else %}
+        {{ course_object.description }}
+        {% endif %}
+      </div>
+      <div class="col-12 align-self-end">
+        <p>
+          <small>Преподаватели</small><br>
+          {% for item in teachers %}
+          {{ item.name_second }} {{ item.name_first }}{% if forloop.last %}{% else %},{% endif %}
+          {% endfor %}
         </p>
+      </div>
     </div>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4 order-1 order-md-2">
+    <div class="row h-100">
+      <div class="col-12 align-self-start">
+        <img class="w-100" src="{% static course_object.cover %}">
+      </div>
+      <div class="col-12 align-self-end d-none d-md-block">
+        <p class="text-center mt-2">
+          <small class="text-uppercase">цена</small><br>
+          <span style="font-size: 30pt;">
+            {{ course_object.cost}}
+          </span><br>
+          <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 d-md-none order-3 order-sm-3">
+    <p class="text-center">
+      <small class="text-uppercase">цена</small><br>
+      <span style="font-size: 30pt;">
+        {{ course_object.cost}}
+      </span><br>
+      <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
+    </p>
+  </div>
 </div>
 <div class="accordion" id="accordionLessons">
 
-    {% for item in lessons %}
-    <div class="card">
-        <div class="card-header" id="headLessonPk{{ item.pk }}">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                    data-target="#collapse{{ item.pk }}" aria-expanded="true" aria-controls="collapse{{ item.pk }}">
-                    {{ item.course.name }} - {{ item.title }}
-                </button>
-            </h2>
-        </div>
-
-        <div id="collapse{{ item.pk }}" class="collapse" aria-labelledby="headLessonPk{{ item.pk }}"
-            data-parent="#accordionLessons">
-            <div class="card-body">
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center">
-                        <img src="{% static 'img/no_image.svg' %}" width="250px">
-                    </div>
-                    <div class="col-12">
-                        {% if item.description_as_markdown %}
-                        {{ item.description|markdownify }}
-                        {% else %}
-                        {{ item.description }}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
+  {% for item in lessons %}
+  <div class="card">
+    <div class="card-header" id="headLessonPk{{ item.pk }}">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+          data-target="#collapse{{ item.pk }}" aria-expanded="true" aria-controls="collapse{{ item.pk }}">
+          {{ item.course.name }} - {{ item.title }}
+        </button>
+      </h2>
     </div>
-    {% endfor %}
+
+    <div id="collapse{{ item.pk }}" class="collapse" aria-labelledby="headLessonPk{{ item.pk }}"
+      data-parent="#accordionLessons">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-12 text-center">
+            <img src="{% static 'img/no_image.svg' %}" width="250px">
+          </div>
+          <div class="col-12">
+            {% if item.description_as_markdown %}
+            {{ item.description|markdownify }}
+            {% else %}
+            {{ item.description }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
 
 </div>
+<h3>Отзывы</h3>
+
+<div id="feedback_list">
+  {% if feedback_list %}
+  {% for item in feedback_list %}
+  {% include 'mainapp/includes/feedback_card.html' %}
+  {% endfor %}
+  {% else %}
+  <p>
+    No feedback yet. Be first!
+  </p>
+  {% endif %}
+</div>
+
+{% if feedback_form %}
+<div class="card" id="cardForm">
+  <div class="card-body">
+    <h5 class="card-title">Добавить отзыв</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Вы ещё не оставляли отзыв к этому
+      курсу</h6>
+    <p class="card-text">
+    <form action="{% url 'mainapp:course_feedback' %}" method="POST" id="feedbackForm">
+      {% csrf_token %}
+      {{ feedback_form|crispy }}
+    </form>
+    <button id="feedbackSubmit" class="btn btn-primary btn-block">Отправить</button>
+    </p>
+  </div>
+</div>
+{% endif %}
+
 {% endblock content %}
+
+{% block js %}
+<script>
+  $(document).ready(function () {
+
+    {% if feedback_form %}
+    $("#feedbackSubmit").click(function () {
+
+      $("#cardForm").hide();
+
+      var $form = $("#feedbackForm");
+      $.ajax({
+        type: "POST",
+        url: $form.attr("action"),
+        data: $form.serialize(),
+        success: function (data) {
+          $("#feedback_list").append(data.card);
+        }
+      });
+
+    });
+    {% endif %}
+
+  });
+</script>
+{% endblock js %}

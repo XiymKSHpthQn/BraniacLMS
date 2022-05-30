@@ -30,6 +30,11 @@ urlpatterns = [
         views.CoursesDetailView.as_view(),
         name="courses_detail",
     ),
+    path(
+        "course_feedback/",
+        views.CourseFeedbackFormProcessView.as_view(),
+        name="course_feedback",
+    ),
     path("contacts/", views.ContactsPageView.as_view(), name="contacts"),
     path("doc_site/", views.DocSitePageView.as_view(), name="doc_site"),
 ]
