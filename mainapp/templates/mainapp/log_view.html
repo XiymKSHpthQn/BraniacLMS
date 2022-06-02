@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-end my-2">
+  <div class="col-sm-4 col-lg-2">
+    <a href="{% url 'mainapp:log_download' %}" class="btn btn-primary btn-block"
+      role="button">Скачать</a>
+  </div>
+</div>
+<p>
+<div class="text-center text-muted"><small>First 1000 lines of log file</small></div>
+<pre>{{ log }}</pre>
+</p>
+{% endblock content %}
