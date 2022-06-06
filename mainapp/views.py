@@ -1,12 +1,22 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import JsonResponse
+import logging
+
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.core.cache import cache
+from django.http import FileResponse, JsonResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
 
 from mainapp import forms as mainapp_forms
 from mainapp import models as mainapp_models
+from mainapp import tasks as mainapp_tasks
+
+logger = logging.getLogger(__name__)
 
 
 class MainPageView(TemplateView):
@@ -58,6 +68,7 @@ class CoursesDetailView(TemplateView):
     template_name = "mainapp/courses_detail.html"
 
     def get_context_data(self, pk=None, **kwargs):
+        logger.debug("Yet another log message")
         context = super(CoursesDetailView, self).get_context_data(**kwargs)
         context["course_object"] = get_object_or_404(mainapp_models.Courses, pk=pk)
         context["lessons"] = mainapp_models.Lesson.objects.filter(course=context["course_object"])
@@ -69,9 +80,18 @@ class CoursesDetailView(TemplateView):
                 context["feedback_form"] = mainapp_forms.CourseFeedbackForm(
                     course=context["course_object"], user=self.request.user
                 )
-        context["feedback_list"] = mainapp_models.CourseFeedback.objects.filter(
-            course=context["course_object"]
-        ).order_by("-created", "-rating")[:5]
+
+        cached_feedback = cache.get(f"feedback_list_{pk}")
+        if not cached_feedback:
+            context["feedback_list"] = (
+                mainapp_models.CourseFeedback.objects.filter(course=context["course_object"])
+                .order_by("-created", "-rating")[:5]
+                .select_related()
+            )
+            cache.set(f"feedback_list_{pk}", context["feedback_list"], timeout=300)  # 5 minutes
+        else:
+            context["feedback_list"] = cached_feedback
+
         return context
 
 
@@ -88,6 +108,59 @@ class CourseFeedbackFormProcessView(LoginRequiredMixin, CreateView):
 class ContactsPageView(TemplateView):
     template_name = "mainapp/contacts.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ContactsPageView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context["form"] = mainapp_forms.MailFeedbackForm(user=self.request.user)
+        return context
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            cache_lock_flag = cache.get(f"mail_feedback_lock_{self.request.user.pk}")
+            if not cache_lock_flag:
+                cache.set(
+                    f"mail_feedback_lock_{self.request.user.pk}",
+                    "lock",
+                    timeout=300,
+                )
+                messages.add_message(self.request, messages.INFO, _("Message sended"))
+                mainapp_tasks.send_feedback_mail.delay(
+                    {
+                        "user_id": self.request.POST.get("user_id"),
+                        "message": self.request.POST.get("message"),
+                    }
+                )
+            else:
+                messages.add_message(
+                    self.request,
+                    messages.WARNING,
+                    _("You can send only one message per 5 minutes"),
+                )
+        return HttpResponseRedirect(reverse_lazy("mainapp:contacts"))
+
 
 class DocSitePageView(TemplateView):
     template_name = "mainapp/doc_site.html"
+
+
+class LogView(TemplateView):
+    template_name = "mainapp/log_view.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(LogView, self).get_context_data(**kwargs)
+        log_slice = []
+        with open(settings.LOG_FILE, "r") as log_file:
+            for i, line in enumerate(log_file):
+                if i == 1000:  # first 1000 lines
+                    break
+                log_slice.insert(0, line)  # append at start
+            context["log"] = "".join(log_slice)
+        return context
+
+
+class LogDownloadView(UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get(self, *args, **kwargs):
+        return FileResponse(open(settings.LOG_FILE, "rb"))
