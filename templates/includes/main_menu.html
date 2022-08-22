@@ -1,7 +1,9 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <img src="/static/img/logo.png" alt="">
+      <img src="{% static 'img/logo.png' %}" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,10 +12,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.NewsPageView' %}active{% endif %}">
+        <li class="nav-item ">
           <a class="nav-link" href="news.html">Новости</a>
         </li>
-        <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.CoursesPageView' %}active{% endif %}">
+        <li class="nav-item ">
           <a class="nav-link" href="courses_list.html">Курсы</a>
         </li>
         <li class="nav-item dropdown">
@@ -33,7 +35,7 @@
             <a class="dropdown-item" href="#">Выход</a>
           </div>
         </li>
-        <li class="nav-item {% if request.resolver_match.view_name == 'mainapp:mainapp.views.ContactsPageView' %}active{% endif %}">
+        <li class="nav-item ">
           <a class="nav-link" href="contacts.html">Контакты</a>
         </li>
       </ul>
