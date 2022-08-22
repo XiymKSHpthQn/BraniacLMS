@@ -2,62 +2,68 @@
 
 {% block content %}
 
-  <div class="row">
+  {% with range as double_range %}
 
-    <div class="col-lg-8">
+    <div class="row">
 
-      {% for i in range %}
-        <div class="card my-2">
+      <div class="col-lg-8">
+
+        {% for i in double_range %}
+          <div class="card my-2">
+            <div class="card-body">
+              <h5 class="card-title">{{ news_title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2021-04-29 20-50-26</h6>
+              <p class="card-text">{{ news_preview }}</p>
+              <a href="#" class="card-link">Подробнее</a>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card my-2 sticky-top">
+          <div class="card-header">
+            Фильтры
+          </div>
           <div class="card-body">
-            <h5 class="card-title">{{ news_title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">2021-04-29 20-50-26</h6>
-            <p class="card-text">{{ news_preview }}</p>
-            <a href="#" class="card-link">Подробнее</a>
+            <form action="">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Дата от...</span>
+                </div>
+                <input type="date" class="form-control" name="dateFrom">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Дата до...</span>
+                </div>
+                <input type="date" class="form-control" name="dateTo">
+              </div>
+
+              <button type="submit"
+                class="btn btn-primary btn-block">Фильтровать</button>
+            </form>
           </div>
         </div>
-      {% endfor %}
-
-    </div>
-
-    <div class="col-lg-4">
-      <div class="card my-2 sticky-top">
-        <div class="card-header">
-          Фильтры
-        </div>
-        <div class="card-body">
-          <form action="">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Дата от...</span>
-              </div>
-              <input type="date" class="form-control" name="dateFrom">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Дата до...</span>
-              </div>
-              <input type="date" class="form-control" name="dateTo">
-            </div>
-
-            <button type="submit"
-              class="btn btn-primary btn-block">Фильтровать</button>
-          </form>
-        </div>
       </div>
+
     </div>
 
-  </div>
+    <div class="row justify-content-center align-items-center mt-3 mb-n3">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
 
-  <div class="row justify-content-center align-items-center mt-3 mb-n3">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
-  </div>
+          {% for i in double_range %}
+            <li class="page-item"><a class="page-link" href="#">{{ i }}</a></li>
+          {% endfor %}
+
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  {% endwith %}
 
 {% endblock content %}
