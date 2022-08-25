@@ -1,0 +1,93 @@
+[
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 1,
+      "fields": {
+        "name_first": "Альфред",
+        "name_second": "Нуцубидзе",
+        "day_birth": "1990-07-10",
+        "course": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 2,
+      "fields": {
+        "name_first": "Роман",
+        "name_second": "Доржинов",
+        "day_birth": "1988-02-04",
+        "course": [
+          2,
+          4
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 3,
+      "fields": {
+        "name_first": "Ярослав",
+        "name_second": "Конягин",
+        "day_birth": "1981-12-08",
+        "course": [
+          3,
+          5
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 4,
+      "fields": {
+        "name_first": "Автандил",
+        "name_second": "Наварский",
+        "day_birth": "1983-05-16",
+        "course": [
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 5,
+      "fields": {
+        "name_first": "Роза",
+        "name_second": "Уланова",
+        "day_birth": "1986-05-09",
+        "course": [
+          5,
+          7
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 6,
+      "fields": {
+        "name_first": "Бронислава",
+        "name_second": "Алиева",
+        "day_birth": "1971-01-07",
+        "course": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "model": "mainapp.courseteachers",
+      "pk": 7,
+      "fields": {
+        "name_first": "Диана",
+        "name_second": "Попова",
+        "day_birth": "1990-08-25",
+        "course": [
+          1,
+          8
+        ]
+      }
+    }
+  ]
