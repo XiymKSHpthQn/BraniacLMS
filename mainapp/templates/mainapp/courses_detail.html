@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static markdownify %}
+
+{% block title %}
+  {{ course_object.name }}
+{% endblock title %}
+
+{% block content %}
+  <h1 class="mt-2">
+    {{ course_object.name }}
+  </h1>
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-6 col-lg-8 order-2 order-md-1">
+      <div class="row h-100">
+        <div class="col-12">
+          {% if course_object.description_as_markdown %}
+            {{ course_object.description|markdownify }}
+          {% else %}
+            {{ course_object.description }}
+          {% endif %}
+        </div>
+        <div class="col-12 align-self-end">
+          <p>
+            <small>Преподаватели</small><br>
+            {% for item in teachers %}
+              {{ item.name_second }} {{ item.name_first }}{% if forloop.last %}{% else %},{% endif %}
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 order-1 order-md-2">
+      <div class="row h-100">
+        <div class="col-12 align-self-start">
+          <img class="w-100" src="{% static course_object.cover %}">
+        </div>
+        <div class="col-12 align-self-end d-none d-md-block">
+          <p class="text-center mt-2">
+            <small class="text-uppercase">цена</small><br>
+            <span style="font-size: 30pt;">
+              {{ course_object.cost}}
+            </span><br>
+            <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 d-md-none order-3 order-sm-3">
+      <p class="text-center">
+        <small class="text-uppercase">цена</small><br>
+        <span style="font-size: 30pt;">
+          {{ course_object.cost}}
+        </span><br>
+        <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
+      </p>
+    </div>
+  </div>
+  <div class="accordion" id="accordionLessons">
+
+    {% for item in lessons %}
+      <div class="card">
+        <div class="card-header" id="headLessonPk{{ item.pk }}">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+              data-target="#collapse{{ item.pk }}" aria-expanded="true" aria-controls="collapse{{ item.pk }}">
+              {{ item.course.name }} - {{ item.title }}
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapse{{ item.pk }}" class="collapse" aria-labelledby="headLessonPk{{ item.pk }}"
+          data-parent="#accordionLessons">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-12 text-center">
+                <img src="{% static 'img/no_image.svg' %}" width="250px">
+              </div>
+              <div class="col-12">
+                {% if item.description_as_markdown %}
+                  {{ item.description|markdownify }}
+                {% else %}
+                  {{ item.description }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+{% endblock content %}
