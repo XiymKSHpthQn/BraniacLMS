@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row justify-content-center pt-3">
+    <div class="col-md-8 col-lg-6">
+      <h2>Пометить новость удалённой?</h2>
+      <p>
+        Поставить отметку удаления для новости:<br>
+        "{{ object.title }}" от {{ object.created }}
+      </p>
+      <p>
+        <div class="row">
+          <div class="col-6">
+            <form action="{% url 'mainapp:news_delete' pk=object.pk %}"
+              method="post">
+              {% csrf_token %}
+              <button class="btn btn-danger btn-block"
+                type="submit">Подтвердить</button>
+            </form>
+          </div>
+          <div class="col-6">
+            <a class="btn btn-primary btn-block" href="{% url 'mainapp:news' %}"
+              role="button">Отмена</a>
+          </div>
+        </div>
+      </p>
+    </div>
+  </div>
+{% endblock content %}
