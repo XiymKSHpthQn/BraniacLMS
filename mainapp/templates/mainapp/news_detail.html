@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ news_object.title|default:"Новости" }}
+  {{ object.title|default:"Новости" }}
 {% endblock title %}
 
 {% block content %}
@@ -9,12 +9,11 @@
     <div class="col-md-12 col-lg-8">
       <div class="card shadow">
         <div class="card-body">
-          <h5 class="card-title">{{ news_object.title }}</h5>
+          <h5 class="card-title">{{ object.title }}</h5>
           <p class="card-text">
-            {{ news_object.body }}
+            {{ object.body }}
           </p>
-          <a href="{% url 'mainapp:news' %}"
-            class="btn btn-primary">Назад</a>
+          <a href="{% url 'mainapp:news' %}" class="btn btn-primary">Назад</a>
         </div>
       </div>
     </div>
