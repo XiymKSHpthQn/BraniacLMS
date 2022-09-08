@@ -161,8 +161,6 @@ class TestNewsSelenium(StaticLiveServerTestCase):
         )
         self.selenium.find_element(value="id_username").send_keys("admin")
         self.selenium.find_element(value="id_password").send_keys("admin")
-        # self.selenium.find_element_by_id("id_username").send_keys("admin")
-        # self.selenium.find_element_by_id("id_password").send_keys("admin")
         button_enter.click()
         # Wait for footer
         WebDriverWait(self.selenium, 5).until(EC.visibility_of_element_located((By.CLASS_NAME, "mt-auto")))
