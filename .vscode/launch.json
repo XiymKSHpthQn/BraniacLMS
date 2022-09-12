@@ -15,6 +15,17 @@
             ],
             "django": true,
             "justMyCode": true
+        },
+        {
+            "name": "Selenium test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "mainapp.tests.TestNewsSelenium.test_pick_color"
+            ],
+            "console": "integratedTerminal"
         }
     ]
 }
